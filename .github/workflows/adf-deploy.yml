@@ -1,0 +1,31 @@
+name: Deploy ADF Pipeline to Azure
+
+on:
+  push:
+    branches:
+      - main  # or adf_publish if you're using ADF Git integration
+
+jobs:
+  deploy:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+    - name: Deploy ARM Template
+      uses: azure/arm-deploy@v1
+      with:
+        resourceGroupName: 'Your-Resource-Group-Name'
+        template: ./ARMTemplateForFactory.json
+        parameters: ./ARMTemplateParametersForFactory.json
+        parametersOverrides: >
+          AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD1 }}
+          AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD2 }}
