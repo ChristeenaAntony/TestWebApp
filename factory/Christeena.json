@@ -1,0 +1,9 @@
+{
+	"name": "Christeena",
+	"location": "eastus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "db79c7bb-1f61-479f-817e-103e7fecfb0f",
+		"tenantId": "fcf67057-50c9-4ad4-98f3-ffca64add9e9"
+	}
+}
