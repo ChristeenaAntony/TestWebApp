@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "Christeena"
+		},
+		"AzureSqlDatabase1_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase2_password": {
+			"value": ""
+		},
+		"AzureSqlDatabase1_properties_typeProperties_server": {
+			"value": "matchsqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_database": {
+			"value": "myFreeDB"
+		},
+		"AzureSqlDatabase1_properties_typeProperties_userName": {
+			"value": "Christeena"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_server": {
+			"value": "matchsqlserver.database.windows.net"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_database": {
+			"value": "TestDB"
+		},
+		"AzureSqlDatabase2_properties_typeProperties_userName": {
+			"value": "Christeena"
+		}
+	}
+}
