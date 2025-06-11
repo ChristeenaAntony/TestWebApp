@@ -3,7 +3,7 @@ name: Deploy ADF Pipeline to Azure
 on:
   push:
     branches:
-      - main  # or adf_publish if you're using ADF Git integration
+      -adf_publish
 
 jobs:
   deploy:
