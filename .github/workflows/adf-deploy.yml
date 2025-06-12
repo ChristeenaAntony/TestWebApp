@@ -23,7 +23,7 @@ jobs:
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
       with:
-        resourceGroupName: 'Your-Resource-Group-Name'
+        resourceGroupName: 'ProductImageAppRG'
         template: ./ARMTemplateForFactory.json
         parameters: ./ARMTemplateParametersForFactory.json
         parametersOverrides: >
