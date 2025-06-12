@@ -3,11 +3,10 @@ name: Deploy ADF to Dev, RTE, Prod
 on:
   push:
     branches:
-      - adf-publish  # Trigger when pushing to the adf-publish branch (ADF Git mode)
+      - adf-publish  # or 'main' if you're using that
 
 jobs:
   deploy-dev:
-    name: Deploy to Dev
     runs-on: windows-latest
     steps:
       - name: Checkout Code
@@ -20,19 +19,18 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy ARM Template to Dev
+      - name: Deploy to Dev
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
-          template: ./ARMTemplateForFactory.json
-          parameters: ./ARMTemplateParametersForFactory.json
+          template: Christeena/ARMTemplateForFactory.json
+          parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
             factoryName=TestWebapp-Dev
-            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_DEV }}
-            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_DEV }}
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
 
   deploy-rte:
-    name: Deploy to RTE
     runs-on: windows-latest
     needs: deploy-dev
     steps:
@@ -46,19 +44,18 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy ARM Template to RTE
+      - name: Deploy to RTE
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
-          template: ./ARMTemplateForFactory.json
-          parameters: ./ARMTemplateParametersForFactory.json
+          template: Christeena/ARMTemplateForFactory.json
+          parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
             factoryName=TestWebapp-RTE
-            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_RTE }}
-            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_RTE }}
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
 
   deploy-prod:
-    name: Deploy to Prod
     runs-on: windows-latest
     needs: deploy-rte
     steps:
@@ -72,13 +69,13 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy ARM Template to Prod
+      - name: Deploy to Prod
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
-          template: ./ARMTemplateForFactory.json
-          parameters: ./ARMTemplateParametersForFactory.json
+          template: Christeena/ARMTemplateForFactory.json
+          parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
             factoryName=TestWebapp-Prod
-            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_PROD }}
-            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_PROD }}
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
