@@ -9,10 +9,10 @@ jobs:
   deploy-dev:
     runs-on: windows-latest
     steps:
-      - name: Checkout adf-publish branch
+      - name: Checkout adf_publish branch
         uses: actions/checkout@v3
         with:
-          ref: adf-publish
+          ref: adf_publish
           
       - name: Azure Login
         uses: azure/login@v1
@@ -36,10 +36,10 @@ jobs:
     runs-on: windows-latest
     needs: deploy-dev
     steps:
-      - name: Checkout adf-publish branch
+      - name: Checkout adf_publish branch
         uses: actions/checkout@v3
         with:
-          ref: adf-publish
+          ref: adf_publish
 
 
       - name: Azure Login
@@ -64,10 +64,10 @@ jobs:
     runs-on: windows-latest
     needs: deploy-rte
     steps:
-      - name: Checkout adf-publish branch
+      - name: Checkout adf_publish branch
         uses: actions/checkout@v3
         with:
-          ref: adf-publish
+          ref: adf_publish
 
       - name: Azure Login
         uses: azure/login@v1
