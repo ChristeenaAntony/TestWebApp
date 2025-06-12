@@ -1,31 +1,83 @@
-name: Deploy ADF Pipeline to Azure
-
+name: Deploy ADF to Dev, RTE, Prod
 on:
   push:
     branches:
-      -adf_publish
+      - main
 
 jobs:
-  deploy:
+  deploy-dev:
     runs-on: windows-latest
-
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v3
 
-    - name: Login to Azure
-      uses: azure/login@v1
-      with:
-        client-id: ${{ secrets.AZURE_CLIENT_ID }}
-        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Deploy ARM Template
-      uses: azure/arm-deploy@v1
-      with:
-        resourceGroupName: 'ProductImageAppRG'
-        template: ./ARMTemplateForFactory.json
-        parameters: ./ARMTemplateParametersForFactory.json
-        parametersOverrides: >
-          AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD1 }}
-          AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD2 }}
+      - name: Deploy to Dev
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: 'ProductImageAppRG'
+          template: ./ARMTemplateForFactory.json
+          parameters: ./ARMTemplateParametersForFactory.json
+          parametersOverrides: >
+            factoryName=TestWebapp-Dev
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_DEV }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_DEV }}
+
+  deploy-rte:
+    name: Deploy to RTE
+    runs-on: windows-latest
+    needs: deploy-dev
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to RTE
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: 'ProductImageAppRG'
+          template: ./ARMTemplateForFactory.json
+          parameters: ./ARMTemplateParametersForFactory.json
+          parametersOverrides: >
+            factoryName=TestWebapp-RTE
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_RTE }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_RTE }}
+
+  deploy-prod:
+    name: Deploy to Prod
+    runs-on: windows-latest
+    needs: deploy-rte
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+
+      - name: Deploy to Prod
+        uses: azure/arm-deploy@v1
+        with:
+          resourceGroupName: 'ProductImageAppRG'
+          template: ./ARMTemplateForFactory.json
+          parameters: ./ARMTemplateParametersForFactory.json
+          parametersOverrides: >
+            factoryName=TestWebapp-Prod
+            AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_PROD }}
+            AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_PROD }}
+       
