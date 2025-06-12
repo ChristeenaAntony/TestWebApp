@@ -40,9 +40,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets..AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
       - name: Deploy to RTE
         uses: azure/arm-deploy@v1
@@ -65,9 +65,9 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+          client-id: ${{ secrets..AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
       - name: Deploy to Prod
         uses: azure/arm-deploy@v1
