@@ -1,11 +1,13 @@
 name: Deploy ADF to Dev, RTE, Prod
+
 on:
   push:
     branches:
-      - main
+      - adf-publish  # Trigger when pushing to the adf-publish branch (ADF Git mode)
 
 jobs:
   deploy-dev:
+    name: Deploy to Dev
     runs-on: windows-latest
     steps:
       - name: Checkout Code
@@ -18,7 +20,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to Dev
+      - name: Deploy ARM Template to Dev
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
@@ -44,7 +46,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to RTE
+      - name: Deploy ARM Template to RTE
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
@@ -70,7 +72,7 @@ jobs:
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Deploy to Prod
+      - name: Deploy ARM Template to Prod
         uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
@@ -80,4 +82,3 @@ jobs:
             factoryName=TestWebapp-Prod
             AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD_PROD }}
             AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD_PROD }}
-       
