@@ -26,7 +26,7 @@ jobs:
           template: Christeena/ARMTemplateForFactory.json
           parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
-            factoryName=TestWebapp-Dev
+            factoryName=Christeena
             AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
             AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
 
@@ -51,7 +51,7 @@ jobs:
           template: Christeena/ARMTemplateForFactory.json
           parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
-            factoryName=TestWebapp-RTE
+            factoryName=Christeena
             AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
             AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
 
@@ -76,6 +76,6 @@ jobs:
           template: Christeena/ARMTemplateForFactory.json
           parameters: Christeena/ARMTemplateParametersForFactory.json
           parametersOverrides: >
-            factoryName=TestWebapp-Prod
+            factoryName=Christeena
             AzureSqlDatabase1_password=${{ secrets.SQL_PASSWORD }}
             AzureSqlDatabase2_password=${{ secrets.SQL_PASSWORD }}
