@@ -40,7 +40,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets..AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
@@ -65,7 +65,7 @@ jobs:
       - name: Azure Login
         uses: azure/login@v1
         with:
-          client-id: ${{ secrets..AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
