@@ -3,7 +3,7 @@ name: Deploy ADF to Dev, RTE, Prod
 on:
   push:
     branches:
-      - adf-publish  # or 'main' if you're using that
+      - master
 
 jobs:
   deploy-dev:
