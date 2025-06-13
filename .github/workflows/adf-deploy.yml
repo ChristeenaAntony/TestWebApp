@@ -15,7 +15,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout adf_publish branch
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
           ref: adf_publish
           
@@ -27,7 +27,7 @@ jobs:
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
       - name: Deploy to Dev
-        uses: azure/arm-deploy@v3
+        uses: azure/arm-deploy@v1
         with:
           resourceGroupName: 'ProductImageAppRG'
           template: Christeena/ARMTemplateForFactory.json
