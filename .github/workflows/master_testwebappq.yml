@@ -35,12 +35,12 @@ jobs:
           name: .net-app
           path: ${{env.DOTNET_ROOT}}/myapp
 
-  deploy:
+  deploy-dev:
     runs-on: windows-latest
     needs: build
     environment:
-      name: 'Production'
-      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+      name: 'Dev'
+      url: ${{ steps.deploy-to-dev.outputs.webapp-url }}
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -58,11 +58,73 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
 
-      - name: Deploy to Azure Web App
-        id: deploy-to-webapp
+      - name: Deploy to Dev
+        id: deploy-to-dev
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'TestWebAppq'
-          slot-name: 'Production'
-          package: .
+          package: ./
+
+  deploy-rte:
+    runs-on: windows-latest
+    needs: deploy-dev
+    environment:
+      name: 'RTE'
+      url: ${{ steps.deploy-to-rte.outputs.webapp-url }}
+
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
+    steps:
+      - name: Download artifact from Dev job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_0EFA5DC95B8E4F4BA970DA4685F20E1F }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_89841FAC6CD840FC8788ED3FDBDB05C3 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_07B7894DBA664E4BA7369C9DBC02BA46 }}
+
+      - name: Deploy to RTE
+        id: deploy-to-rte
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'TestWebApp-rte'
+          package: ./
+          
+          
+  deploy-prod:
+    runs-on: windows-latest
+    needs: deploy-rte
+    environment:
+      name: 'PROD'
+      url: ${{ steps.deploy-to-prod.outputs.webapp-url }}
+
+    permissions:
+      id-token: write #This is required for requesting the JWT
+      contents: read #This is required for actions/checkout
+
+    steps:
+      - name: Download artifact from RTE job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+      
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_D0D6A26FD0054D38BFAFD083581516A2 }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_F4914F07D54C49248CF3F2635A6C9EE5 }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_C873F0E0281F49D89EA0F217F0B99622 }}
+
+      - name: Deploy to Prod
+        id: deploy-to-prod
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'TestWebApp-prod'
+          package: ./
           
