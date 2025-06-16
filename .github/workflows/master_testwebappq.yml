@@ -38,8 +38,7 @@ jobs:
   deploy-dev:
     runs-on: windows-latest
     needs: build
-    environment:
-      name: 'Dev'
+    
       
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -68,8 +67,7 @@ jobs:
   deploy-rte:
     runs-on: windows-latest
     needs: deploy-dev
-    environment:
-      name: 'RTE'
+    
       
 
     permissions:
@@ -100,8 +98,7 @@ jobs:
   deploy-prod:
     runs-on: windows-latest
     needs: deploy-rte
-    environment:
-      name: 'PROD'
+    
       
 
     permissions:
