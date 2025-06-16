@@ -38,6 +38,8 @@ jobs:
   deploy-dev:
     runs-on: windows-latest
     needs: build
+    environment:
+      name: 'Production'
     
       
     permissions:
@@ -67,7 +69,8 @@ jobs:
   deploy-rte:
     runs-on: windows-latest
     needs: deploy-dev
-    
+    environment:
+      name: 'Production'
       
 
     permissions:
@@ -98,7 +101,8 @@ jobs:
   deploy-prod:
     runs-on: windows-latest
     needs: deploy-rte
-    
+    environment:
+      name: 'Production'
       
 
     permissions:
