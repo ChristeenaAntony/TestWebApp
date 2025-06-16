@@ -40,7 +40,7 @@ jobs:
     needs: build
     environment:
       name: 'Dev'
-      url: ${{ steps.deploy-to-dev.outputs.webapp-url }}
+      
     permissions:
       id-token: write #This is required for requesting the JWT
       contents: read #This is required for actions/checkout
@@ -70,7 +70,7 @@ jobs:
     needs: deploy-dev
     environment:
       name: 'RTE'
-      url: ${{ steps.deploy-to-rte.outputs.webapp-url }}
+      
 
     permissions:
       id-token: write #This is required for requesting the JWT
@@ -102,7 +102,7 @@ jobs:
     needs: deploy-rte
     environment:
       name: 'PROD'
-      url: ${{ steps.deploy-to-prod.outputs.webapp-url }}
+      
 
     permissions:
       id-token: write #This is required for requesting the JWT
