@@ -40,6 +40,8 @@ jobs:
     needs: build
     environment:
       name: 'Production'
+      url: ${{ steps.deploy-to-dev.outputs.webapp-url }}
+
     
       
     permissions:
@@ -71,6 +73,8 @@ jobs:
     needs: deploy-dev
     environment:
       name: 'Production'
+      url: ${{ steps.deploy-to-rte.outputs.webapp-url }}
+
       
 
     permissions:
@@ -103,7 +107,8 @@ jobs:
     needs: deploy-rte
     environment:
       name: 'Production'
-      
+      url: ${{ steps.deploy-to-prod.outputs.webapp-url }}
+
 
     permissions:
       id-token: write #This is required for requesting the JWT
